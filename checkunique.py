@@ -1,8 +1,12 @@
+import time
 import tkinter as tk
+import os 
 from tkinter import ttk
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 def get_unique_subpages(url):
     try:
@@ -13,10 +17,35 @@ def get_unique_subpages(url):
         return list(subpages)
     except Exception as e:
         return [f"Error: {str(e)}"]
-
-
+    
+def getPageScreenshot(url,dirName):
+    try:
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        browser = webdriver.Chrome(options=options)
+        browser.get(url)
+        s=browser.current_url
+        s=s.replace('https://sites.google.com/view/'+dirName,'')
+        s=s.replace('/','')
+        
+        height = browser.execute_script('return document.documentElement.scrollHeight')
+        width  = browser.execute_script('return document.documentElement.scrollWidth')
+        browser.set_window_size(width, height)
+        time.sleep(2)
+        browser.save_screenshot(dirName+"/"+s+".png")
+        browser.quit()
+    except Exception as e:
+        print(f"Error Getting Screenshot:{str(e)}")
+    return
+def getDirectoryName(s):
+        s=s.replace('https://sites.google.com/view','')
+        return s.replace('/','')
 def fetch_unique_subpages():
     url = entry.get()
+    dirName=getDirectoryName(url)
+    if not os.path.exists(dirName):
+            os.makedirs(dirName)
     unique_subpages = get_unique_subpages(url)
 
     result_text.config(state=tk.NORMAL)
@@ -27,6 +56,8 @@ def fetch_unique_subpages():
 
     result_text.config(state=tk.DISABLED)
 
+    for subpage in unique_subpages:
+        getPageScreenshot(subpage,dirName)
 
 # Create the main window
 root = tk.Tk()

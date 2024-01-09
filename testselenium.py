@@ -1,11 +1,13 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-browser = webdriver.Chrome()
-browser.get("https://www.google.com")
+from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.common.keys import Keys
+options = Options()
+options.add_argument("--headless")
+browser = webdriver.Chrome(options=options)
+browser.get("https://sites.google.com/view/shadrackkimutai")
 s=browser.current_url
 s=s.replace('https://','')
-print(s.replace('/',''))
+s=s.replace('/','')
 
-#browser.save_screenshot("link"+browser.current_url+".png")
+browser.save_screenshot(s+".png")
 browser.close()
