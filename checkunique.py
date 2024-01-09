@@ -26,7 +26,7 @@ def getPageScreenshot(url,dirName):
         browser = webdriver.Chrome(options=options)
         browser.get(url)
         s=browser.current_url
-        s=s.replace('https://sites.google.com/view/'+dirName,'')
+        s=s.replace('https://sites.google.com/view/','')
         s=s.replace('/','')
         
         height = browser.execute_script('return document.documentElement.scrollHeight')

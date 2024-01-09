@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
 import requests
+from tkinter import ttk
+
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
