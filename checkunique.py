@@ -26,9 +26,10 @@ def getPageScreenshot(url,dirName):
         browser = webdriver.Chrome(options=options)
         browser.get(url)
         s=browser.current_url
-        s=s.replace('https://sites.google.com/view/','')
+        s=s.replace('https://sites.google.com/view/'+dirName.replace('.snapshot',''),'')
         s=s.replace('/','')
-        
+
+       # print('filename is '+s+' dirname is '+dirName)
         height = browser.execute_script('return document.documentElement.scrollHeight')
         width  = browser.execute_script('return document.documentElement.scrollWidth')
         browser.set_window_size(width, height)
@@ -43,9 +44,9 @@ def getDirectoryName(s):
         return s.replace('/','')
 def fetch_unique_subpages():
     url = entry.get()
-    dirName=getDirectoryName(url)
+    dirName=getDirectoryName(url)+'.snapshot'
     if not os.path.exists(dirName):
-            os.makedirs(dirName)
+        os.makedirs(dirName)
     unique_subpages = get_unique_subpages(url)
 
     result_text.config(state=tk.NORMAL)
