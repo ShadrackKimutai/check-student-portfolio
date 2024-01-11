@@ -71,7 +71,7 @@ label.grid(row=0, column=0, padx=10, pady=10)
 entry = ttk.Entry(root, width=40)
 entry.grid(row=0, column=1, padx=10, pady=10)
 
-fetch_button = ttk.Button(root, text="Fetch Unique Subpages", command=getBulkAddresses)
+fetch_button = ttk.Button(root, text="Fetch Portfolios", command=getBulkAddresses)
 fetch_button.grid(row=1, column=0, columnspan=2, pady=10)
 
 # Run the Tkinter event loop
