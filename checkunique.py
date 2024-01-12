@@ -23,7 +23,8 @@ def createCSV():
                 first_file = files[0]  # Get the first file
                 with open(os.path.join(root, first_file), 'r') as f:
                     contents = f.read()
-                    contents=contents.replace(directory,'')
+                    leftPattern="<!DOCTYPE html><html><head><meta charset=""UTF-8""></head><body><p dir=""ltr"" style=""text-align:left;"">"
+                    contents=contents.replace(contents,leftPattern)
                     print(contents)
                     csv_writer.writerow([contents])
 
