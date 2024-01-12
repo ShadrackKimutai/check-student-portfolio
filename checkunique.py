@@ -10,11 +10,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 #folder processor
-def createCSV(directory):
+def createCSV():
+    directory=entry.get()
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
     #"""
-
+    print(directory)
     with open('eportfolios.csv', 'w', newline='') as csvfile: #create eportfolios csv file for writing
         csv_writer = csv.writer(csvfile)
 
@@ -23,7 +24,9 @@ def createCSV(directory):
                 first_file = files[0]  # Get the first file
                 with open(os.path.join(root, first_file), 'r') as f:
                     contents = f.read()
-                    csv_writer.writerow([root, first_file, contents])
+                    contents=contents.replace(directory,'')
+                    print(contents)
+                    csv_writer.writerow([contents])
 
 def get_unique_subpages(url):
     try:
