@@ -81,7 +81,7 @@ root = tk.Tk()
 root.title("Bulk Portfolio Snapshot process")
 
 # Create and place widgets
-label = ttk.Label(root, text="Enter CVS Path including the name and extension of file")
+label = ttk.Label(root, text="Select Path to folder dwonloaded from LMS")
 label.grid(row=0, column=0, padx=10, pady=10)
 
 entry = ttk.Entry(root, width=40)
