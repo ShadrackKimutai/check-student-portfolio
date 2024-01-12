@@ -10,7 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 #folder processor
-def process_folders(directory):
+def createCSV(directory):
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
     #"""
@@ -87,7 +87,7 @@ label.grid(row=0, column=0, padx=10, pady=10)
 entry = ttk.Entry(root, width=40)
 entry.grid(row=0, column=1, padx=10, pady=10)
 
-fetch_button = ttk.Button(root, text="Fetch Portfolios", command=getBulkAddresses)
+fetch_button = ttk.Button(root, text="Fetch Portfolios", command=createCSV)
 fetch_button.grid(row=1, column=0, columnspan=2, pady=10)
 
 # Run the Tkinter event loop
