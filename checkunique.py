@@ -9,6 +9,22 @@ from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+#folder processor
+def process_folders(directory):
+    #Opens all folders in a directory, reads the contents of the first file
+    #in each folder, and writes those contents to a single CSV file.
+    #"""
+
+    with open('eportfolios.csv', 'w', newline='') as csvfile: #create eportfolios csv file for writing
+        csv_writer = csv.writer(csvfile)
+
+        for root, _, files in os.walk(directory):
+            if files:  # Check if there are files in the folder
+                first_file = files[0]  # Get the first file
+                with open(os.path.join(root, first_file), 'r') as f:
+                    contents = f.read()
+                    csv_writer.writerow([root, first_file, contents])
+
 def get_unique_subpages(url):
     try:
         response = requests.get(url)
