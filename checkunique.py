@@ -1,3 +1,4 @@
+import csv
 import time
 import tkinter as tk
 import os 
@@ -23,8 +24,10 @@ def createCSV():
                 first_file = files[0]  # Get the first file
                 with open(os.path.join(root, first_file), 'r') as f:
                     contents = f.read()
+                    '''
                     leftPattern="<!DOCTYPE html><html><head><meta charset=""UTF-8""></head><body>"
                     contents=contents.replace(leftPattern,'')
+                    '''
                     csv_writer.writerow([contents])
 
 def get_unique_subpages(url):
