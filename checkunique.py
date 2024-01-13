@@ -57,18 +57,20 @@ def getPageScreenshot(url,dirName):
     except Exception as e:
         print(f"Error Getting Screenshot:{str(e)}")
     return
+
 def getDirectoryName(s):
         s=s.replace('https://sites.google.com/view','')
         return s.replace('/','')
+
 def getBulkAddresses():
-    filePath=entry.get()
+    filePath=txtentry.get()
     with open(filePath, 'r') as file:
         urlList = csv.reader(file)
         for url in urlList:
             print(url[0])
             fetchUniqueSubPages(url[0])
+
 def fetchUniqueSubPages(url):
-    
     dirName=getDirectoryName(url)+'.snapshot'
     if not os.path.exists(dirName):
         os.makedirs(dirName)
@@ -82,14 +84,23 @@ root = tk.Tk()
 root.title("Bulk Portfolio Snapshot process")
 
 # Create and place widgets
-label = ttk.Label(root, text="Select Path to folder dwonloaded from LMS")
+label = ttk.Label(root, text="Select Path to folder downloaded from LMS")
 label.grid(row=0, column=0, padx=10, pady=10)
 
-entry = ttk.Entry(root, width=40)
-entry.grid(row=0, column=1, padx=10, pady=10)
+label = ttk.Label(root, text="Select Path to Cleaned CSV")
+label.grid(row=2, column=0, padx=10, pady=10)
 
-fetch_button = ttk.Button(root, text="Fetch Portfolios", command=createCSV)
-fetch_button.grid(row=1, column=0, columnspan=2, pady=10)
+txtentry = ttk.Entry(root, width=40)
+txtentry.grid(row=0, column=1, padx=10, pady=10)
+
+txtcleancsv=ttk.Entry(root, width=40)
+txtcleancsv.grid(row=2, column=1, padx=10, pady=10)
+
+btncreateCSV= ttk.Button(root, text="Fetch Portfolios", command=createCSV)
+btncreateCSV.grid(row=1, column=0, columnspan=2, pady=10)
+
+btnFetchPortfolios= ttk.Button(root, text="Fetch Portfolios", command=getBulkAddresses)
+btnFetchPortfolios.grid(row=3, column=0, columnspan=2, pady=10)
 
 # Run the Tkinter event loop
 root.mainloop()
