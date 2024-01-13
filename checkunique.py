@@ -24,10 +24,6 @@ def createCSV():
                 first_file = files[0]  # Get the first file
                 with open(os.path.join(root, first_file), 'r') as f:
                     contents = f.read()
-                    '''
-                    leftPattern="<!DOCTYPE html><html><head><meta charset=""UTF-8""></head><body>"
-                    contents=contents.replace(leftPattern,'')
-                    '''
                     csv_writer.writerow([contents])
 
 def get_unique_subpages(url):
@@ -48,9 +44,10 @@ def getPageScreenshot(url,dirName):
         browser = webdriver.Chrome(options=options)
         browser.get(url)
         s=browser.current_url
-        s=s.replace('https://sites.google.com/view/'+dirName,'')
+        s=s.replace('https://sites.google.com/view/'+dirName.replace('.snapshot',''),'')
         s=s.replace('/','')
-        
+
+       # print('filename is '+s+' dirname is '+dirName)
         height = browser.execute_script('return document.documentElement.scrollHeight')
         width  = browser.execute_script('return document.documentElement.scrollWidth')
         browser.set_window_size(width, height)
@@ -63,41 +60,36 @@ def getPageScreenshot(url,dirName):
 def getDirectoryName(s):
         s=s.replace('https://sites.google.com/view','')
         return s.replace('/','')
-def fetch_unique_subpages():
-    url = entry.get()
-    dirName=getDirectoryName(url)
+def getBulkAddresses():
+    filePath=entry.get()
+    with open(filePath, 'r') as file:
+        urlList = csv.reader(file)
+        for url in urlList:
+            print(url[0])
+            fetchUniqueSubPages(url[0])
+def fetchUniqueSubPages(url):
+    
+    dirName=getDirectoryName(url)+'.snapshot'
     if not os.path.exists(dirName):
-            os.makedirs(dirName)
+        os.makedirs(dirName)
     unique_subpages = get_unique_subpages(url)
-
-    result_text.config(state=tk.NORMAL)
-    result_text.delete(1.0, tk.END)
-
-    for subpage in unique_subpages:
-        result_text.insert(tk.END, subpage + '\n')
-
-    result_text.config(state=tk.DISABLED)
 
     for subpage in unique_subpages:
         getPageScreenshot(subpage,dirName)
 
 # Create the main window
 root = tk.Tk()
-root.title("Webpage Unique Subpages Extractor")
+root.title("Bulk Portfolio Snapshot process")
 
 # Create and place widgets
-label = ttk.Label(root, text="Enter URL:")
+label = ttk.Label(root, text="Select Path to folder dwonloaded from LMS")
 label.grid(row=0, column=0, padx=10, pady=10)
 
 entry = ttk.Entry(root, width=40)
 entry.grid(row=0, column=1, padx=10, pady=10)
 
-fetch_button = ttk.Button(root, text="Fetch Unique Subpages", command=fetch_unique_subpages)
+fetch_button = ttk.Button(root, text="Fetch Portfolios", command=createCSV)
 fetch_button.grid(row=1, column=0, columnspan=2, pady=10)
-
-result_text = tk.Text(root, wrap=tk.WORD, height=10, width=60)
-result_text.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
-result_text.config(state=tk.DISABLED)
 
 # Run the Tkinter event loop
 root.mainloop()
