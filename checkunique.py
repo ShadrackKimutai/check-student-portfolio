@@ -60,10 +60,12 @@ def getPageScreenshot(url,dirName):
 
 def getDirectoryName(s):
         s=s.replace('https://sites.google.com/view','')
+        s=s.replace('https://sites.google.com/kttc.ac.ke','')
+
         return s.replace('/','')
 
 def getBulkAddresses():
-    filePath=txtentry.get()
+    filePath=txtcleancsv.get()
     with open(filePath, 'r') as file:
         urlList = csv.reader(file)
         for url in urlList:
