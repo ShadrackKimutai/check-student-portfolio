@@ -1,4 +1,5 @@
 import csv
+import re
 import time
 import tkinter as tk
 import os 
@@ -11,7 +12,7 @@ from selenium.webdriver.chrome.options import Options
 
 #folder processor
 def createCSV():
-    directory=entry.get()
+    directory=txtentry.get()
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
     #"""
@@ -24,6 +25,7 @@ def createCSV():
                 first_file = files[0]  # Get the first file
                 with open(os.path.join(root, first_file), 'r') as f:
                     contents = f.read()
+                    contents=re.sub(re.compile('<.*?>'),'',contents) # strips html from files
                     csv_writer.writerow([contents])
 
 def get_unique_subpages(url):
