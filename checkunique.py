@@ -91,11 +91,9 @@ def ClickedontxtEntry(self):
     folder_selected = filedialog.askdirectory()
     PortfolioFolderLocation.set(folder_selected)
 
-""" def ClickedontxtEntry(): 
-    folder_selected = filedialog.askdirectory()
-    PortfolioFolderLocation.set(folder_selected)"""
-    
-
+def ClickedontxtCleanCSV(self): 
+    folder_selected = filedialog.askopenfilename('eportfolios.csv')
+    PortfolioFolderLocation.set(folder_selected)
 
 # Create the main window
 root = tk.Tk()
@@ -109,14 +107,17 @@ label = ttk.Label(root, text="Select Path to Cleaned CSV")
 label.grid(row=2, column=0, padx=10, pady=10)
 
 PortfolioFolderLocation=tk.StringVar()
+CleanedCSVLocation=tk.StringVar()
+
 txtentry = ttk.Entry(root, width=40,state="readonly",textvariable=PortfolioFolderLocation)
 txtentry.grid(row=0, column=1, padx=10, pady=10)
 txtentry.bind("<1>", ClickedontxtEntry)
 
 
 
-txtcleancsv=ttk.Entry(root, width=40)
+txtcleancsv=ttk.Entry(root, width=40,state="readonly",textvariable=CleanedCSVLocation)
 txtcleancsv.grid(row=2, column=1, padx=10, pady=10)
+txtentry.bind("<1>", ClickedontxtCleanCSV)
 
 btncreateCSV= ttk.Button(root, text="Create CSV File", command=createCSV)
 btncreateCSV.grid(row=1, column=0, columnspan=2, pady=10)
