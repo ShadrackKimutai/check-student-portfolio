@@ -3,17 +3,19 @@ import re
 import time
 import tkinter as tk
 import os 
-from tkinter import ttk
+from tkinter import StringVar, ttk
 from tkinter import filedialog
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-folderLocation=''
+
 #folder processor
 def createCSV():
-   
+    if len(txtentry.get()) == 0:
+        ClickedontxtEntry(any)
+
     directory=txtentry.get()
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
@@ -85,9 +87,15 @@ def fetchUniqueSubPages(url):
     for subpage in unique_subpages:
         getPageScreenshot(subpage,dirName)
 
-def ClickedontxtEntry():
+def ClickedontxtEntry(self):
     folder_selected = filedialog.askdirectory()
-    return folder_selected
+    PortfolioFolderLocation.set(folder_selected)
+
+""" def ClickedontxtEntry(): 
+    folder_selected = filedialog.askdirectory()
+    PortfolioFolderLocation.set(folder_selected)"""
+    
+
 
 # Create the main window
 root = tk.Tk()
@@ -100,9 +108,11 @@ label.grid(row=0, column=0, padx=10, pady=10)
 label = ttk.Label(root, text="Select Path to Cleaned CSV")
 label.grid(row=2, column=0, padx=10, pady=10)
 
-txtentry = ttk.Entry(root, width=40,state="readonly",textvariable=folderLocation)
+PortfolioFolderLocation=tk.StringVar()
+txtentry = ttk.Entry(root, width=40,textvariable=PortfolioFolderLocation)
 txtentry.grid(row=0, column=1, padx=10, pady=10)
 txtentry.bind("<1>", ClickedontxtEntry)
+
 
 
 txtcleancsv=ttk.Entry(root, width=40)
