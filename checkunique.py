@@ -20,7 +20,7 @@ def createCSV():
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
     #"""
-    print(directory)
+   # print(directory)
     with open('eportfolios.csv', 'w', newline='') as csvfile: #create eportfolios csv file for writing
         csv_writer = csv.writer(csvfile)
 
@@ -109,7 +109,7 @@ label = ttk.Label(root, text="Select Path to Cleaned CSV")
 label.grid(row=2, column=0, padx=10, pady=10)
 
 PortfolioFolderLocation=tk.StringVar()
-txtentry = ttk.Entry(root, width=40,textvariable=PortfolioFolderLocation)
+txtentry = ttk.Entry(root, width=40,state="readonly",textvariable=PortfolioFolderLocation)
 txtentry.grid(row=0, column=1, padx=10, pady=10)
 txtentry.bind("<1>", ClickedontxtEntry)
 
@@ -118,7 +118,7 @@ txtentry.bind("<1>", ClickedontxtEntry)
 txtcleancsv=ttk.Entry(root, width=40)
 txtcleancsv.grid(row=2, column=1, padx=10, pady=10)
 
-btncreateCSV= ttk.Button(root, text="Fetch Portfolios", command=createCSV)
+btncreateCSV= ttk.Button(root, text="Create CSV File", command=createCSV)
 btncreateCSV.grid(row=1, column=0, columnspan=2, pady=10)
 
 btnFetchPortfolios= ttk.Button(root, text="Fetch Portfolios", command=getBulkAddresses)
