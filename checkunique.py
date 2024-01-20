@@ -71,6 +71,8 @@ def getDirectoryName(s):
         return s.replace('/','')
 
 def getBulkAddresses():
+    if len(txtcleancsv.get()) == 0:
+        ClickedontxtCleanCSV(any)
     filePath=txtcleancsv.get()
     with open(filePath, 'r') as file:
         urlList = csv.reader(file)
