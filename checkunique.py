@@ -13,14 +13,16 @@ from selenium.webdriver.chrome.options import Options
 
 #folder processor
 def createCSV():
+        #check if txtentry entry is empty if so trigger its population using the dialog box
+
     if len(txtentry.get()) == 0:
         ClickedontxtEntry(any)
 
     directory=txtentry.get()
+
     #Opens all folders in a directory, reads the contents of the first file
     #in each folder, and writes those contents to a single CSV file.
-    #"""
-   # print(directory)
+
     with open('eportfolios.csv', 'w', newline='') as csvfile: #create eportfolios csv file for writing
         csv_writer = csv.writer(csvfile)
 
@@ -71,8 +73,10 @@ def getDirectoryName(s):
         return s.replace('/','')
 
 def getBulkAddresses():
+    #check if txtclean entry is empty if so trigger its population using the dialog box
     if len(txtcleancsv.get()) == 0:
         ClickedontxtCleanCSV(any)
+
     filePath=txtcleancsv.get()
     with open(filePath, 'r') as file:
         urlList = csv.reader(file)
@@ -94,8 +98,8 @@ def ClickedontxtEntry(self):
     PortfolioFolderLocation.set(folder_selected)
 
 def ClickedontxtCleanCSV(self): 
-    folder_selected = filedialog.askopenfilename('eportfolios.csv')
-    PortfolioFolderLocation.set(folder_selected)
+    file_selected = filedialog.askopenfilename()
+    CleanedCSVLocation.set(file_selected)
 
 # Create the main window
 root = tk.Tk()
@@ -119,7 +123,7 @@ txtentry.bind("<1>", ClickedontxtEntry)
 
 txtcleancsv=ttk.Entry(root, width=40,state="readonly",textvariable=CleanedCSVLocation)
 txtcleancsv.grid(row=2, column=1, padx=10, pady=10)
-txtentry.bind("<1>", ClickedontxtCleanCSV)
+txtcleancsv.bind("<1>", ClickedontxtCleanCSV)
 
 btncreateCSV= ttk.Button(root, text="Create CSV File", command=createCSV)
 btncreateCSV.grid(row=1, column=0, columnspan=2, pady=10)
